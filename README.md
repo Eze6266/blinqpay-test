@@ -1,16 +1,11 @@
 # blinqpay
 
-A new Flutter project.
+Used a simple mvc folder structure for the task.
 
-## Getting Started
+used a page approach but instead worked with tabs to avoid different screen navigation and for simplicity.
 
-This project is a starting point for a Flutter application.
+created my reusable components, connected my application to firebase using the credentials provided.
 
-A few resources to get you started if this is your first Flutter project:
+Also implemented a simple dark mode/light mode functionality where the colors would be selected by me and not letting the code do it for me. Did this because i was already making use if custom colors class. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Added an internet connectivity checker also to detect if the device has no internet connection to avoid unnecessary errors.
