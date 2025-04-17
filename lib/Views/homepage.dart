@@ -1,17 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:blinqpay/Utilities/Functions/theme_coloring.dart';
-import 'package:blinqpay/Utilities/Functions/time_formatter.dart';
 import 'package:blinqpay/Utilities/app_colors.dart';
 import 'package:blinqpay/Utilities/reusables.dart';
-import 'package:blinqpay/Views/Components/post_card.dart';
 import 'package:blinqpay/Views/Components/posts_tab.dart';
 import 'package:blinqpay/Views/Components/users_tab.dart';
 import 'package:blinqpay/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

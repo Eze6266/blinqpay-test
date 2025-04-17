@@ -4,7 +4,6 @@ import 'package:blinqpay/Utilities/Functions/theme_coloring.dart';
 import 'package:blinqpay/Utilities/Functions/time_formatter.dart';
 import 'package:blinqpay/Utilities/app_colors.dart';
 import 'package:blinqpay/Utilities/reusables.dart';
-import 'package:blinqpay/main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

@@ -17,106 +17,106 @@ class UsersSection extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('users').snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Center(
-            child: MyLoader(),
-          );
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData) {
+          return Center(child: MyLoader());
+        }
+
         final users = snapshot.data!.docs;
 
-        return users.isEmpty == false
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    kImages.emptysvg,
-                    height: 5 * size.height / 100,
-                    color: themedColor(
-                      light: kColors.blackColor,
-                      dark: kColors.whiteColor,
-                    ),
-                  ),
-                  Height(h: 1),
-                  kTxt(
-                    text:
-                        'Active users are displayed here\n Looks like you don\'t have any',
-                    textalign: TextAlign.center,
-                    size: 12,
-                    color: themedColor(
-                      light: kColors.blackColor,
-                      dark: kColors.whiteColor,
-                    ),
-                  )
-                ],
-              )
-            : ListView.builder(
-                padding: EdgeInsets.only(
-                  top: 2 * size.height / 100,
+        if (users.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                kImages.emptysvg,
+                height: 5 * size.height / 100,
+                color: themedColor(
+                  light: kColors.blackColor,
+                  dark: kColors.whiteColor,
                 ),
-                itemCount: users.length,
-                itemBuilder: (context, index) {
-                  final user = users[index];
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 1.5 * size.height / 100,
-                      right: 2 * size.width / 100,
-                      left: 2 * size.width / 100,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 22,
-                              child: ClipOval(
-                                child: CachedNetworkImage(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  imageUrl: user['photo'],
-                                  fit: BoxFit.cover,
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                    child: Icon(
-                                      Icons.person_3_outlined,
-                                    ),
-                                  ),
-                                ),
-                              ),
+              ),
+              Height(h: 1),
+              kTxt(
+                text:
+                    'Active users are displayed here\nLooks like you don\'t have any',
+                textalign: TextAlign.center,
+                size: 12,
+                color: themedColor(
+                  light: kColors.blackColor,
+                  dark: kColors.whiteColor,
+                ),
+              )
+            ],
+          );
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.only(
+            top: 2 * size.height / 100,
+          ),
+          itemCount: users.length,
+          itemBuilder: (context, index) {
+            final user = users[index];
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: 1.5 * size.height / 100,
+                right: 2 * size.width / 100,
+                left: 2 * size.width / 100,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 22,
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            width: double.infinity,
+                            height: double.infinity,
+                            imageUrl: user['photo'],
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Container(
+                              child: Icon(Icons.person_3_outlined),
                             ),
-                            Width(w: 3),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                kTxt(
-                                  text: user['username'],
-                                  weight: FontWeight.w600,
-                                  size: 16,
-                                  color: themedColor(
-                                    light: kColors.blackColor,
-                                    dark: kColors.whiteColor,
-                                  ),
-                                ),
-                                kTxt(
-                                  text: user['bio'],
-                                  weight: FontWeight.w400,
-                                  size: 14,
-                                  maxLine: 5,
-                                  color: themedColor(
-                                    light: kColors.blackColor.withOpacity(0.8),
-                                    dark: kColors.whitishGrey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                        Height(h: 0.5),
-                        Divider(color: kColors.whitishGrey.withOpacity(0.4)),
-                      ],
-                    ),
-                  );
-                },
-              );
+                      ),
+                      Width(w: 3),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          kTxt(
+                            text: user['username'],
+                            weight: FontWeight.w600,
+                            size: 16,
+                            color: themedColor(
+                              light: kColors.blackColor,
+                              dark: kColors.whiteColor,
+                            ),
+                          ),
+                          kTxt(
+                            text: user['bio'],
+                            weight: FontWeight.w400,
+                            size: 14,
+                            maxLine: 5,
+                            color: themedColor(
+                              light: kColors.blackColor.withOpacity(0.8),
+                              dark: kColors.whitishGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Height(h: 0.5),
+                  Divider(color: kColors.whitishGrey.withOpacity(0.4)),
+                ],
+              ),
+            );
+          },
+        );
       },
     );
   }

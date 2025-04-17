@@ -19,48 +19,51 @@ class PostsSection extends StatelessWidget {
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Center(
-            child: MyLoader(),
-          );
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData) {
+          return Center(child: MyLoader());
+        }
+
         final posts = snapshot.data!.docs;
 
-        return posts.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    kImages.emptysvg,
-                    height: 5 * size.height / 100,
-                    color: themedColor(
-                      light: kColors.blackColor,
-                      dark: kColors.whiteColor,
-                    ),
-                  ),
-                  Height(h: 1),
-                  kTxt(
-                    text:
-                        'Your posts are displayed here\n Looks like you don\'t have any',
-                    textalign: TextAlign.center,
-                    size: 12,
-                    color: themedColor(
-                      light: kColors.blackColor,
-                      dark: kColors.whiteColor,
-                    ),
-                  )
-                ],
-              )
-            : ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  return PostCard(post: posts[index]);
-                },
-                separatorBuilder: (context, index) => Divider(
-                  color: kColors.whitishGrey,
-                  thickness: 0.5,
+        if (posts.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                kImages.emptysvg,
+                height: 5 * size.height / 100,
+                color: themedColor(
+                  light: kColors.blackColor,
+                  dark: kColors.whiteColor,
                 ),
-              );
+              ),
+              Height(h: 1),
+              kTxt(
+                text:
+                    'Your posts are displayed here\nLooks like you don\'t have any',
+                textalign: TextAlign.center,
+                size: 12,
+                color: themedColor(
+                  light: kColors.blackColor,
+                  dark: kColors.whiteColor,
+                ),
+              ),
+            ],
+          );
+        }
+
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            return PostCard(post: posts[index]);
+          },
+          separatorBuilder: (context, index) => Divider(
+            color: kColors.whitishGrey,
+            thickness: 0.5,
+          ),
+        );
       },
     );
   }
